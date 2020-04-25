@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="jumbotron jumbotron-fluid text-center"><h3 class="font-weight-light">What's New?</h5></div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md pb-3">
+        <div class="card">
+          <div class="card-header bg-light"><h5>Tasting</h5></div>
+          <div class="card-body">
+            <p class="card-text">Tried a new coffee? Maybe an old coffee prepared with a new method? Go here. </p>
+            <a class ="btn btn-primary" href="{{ url_for('new_tasting') }}">Record</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md pb-3">
+        <div class="card">
+          <div class="card-header bg-light"><h5>Roast</h5></div>
+          <div class="card-body">
+            <p class="card-text">Roasted something fresh? Save the details here.</p>
+            <a class="btn btn-primary" href="{{ url_for('new_roast') }}">Record</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md pb-3">
+        <div class="card">
+          <div class="card-header bg-light"><h5>A Roasted Coffee</h5></div>
+          <div class="card-body">
+            <p class="card-text">Have a new roasted coffee to work with? Save the details here.</p>
+            <a class="btn btn-primary" href="{{ url_for('new_roasted_coffee') }}">Record</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md pb-3">
+        <div class="card">
+          <div class="card-header bg-light"><h5>A Roasted Coffee</h5></div>
+          <div class="card-body">
+            <p class="card-text">Have a new roasted coffee to work with? Save the details here.</p>
+            <a class="btn btn-primary" href="{{ url_for('new_green_coffee') }}">Record</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

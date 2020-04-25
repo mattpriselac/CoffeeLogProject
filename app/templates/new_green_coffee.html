@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Describe the green coffee you'd like to add</h3>
+<form action="" method="post" novalidate>
+  {{ form.hidden_tag() }}
+  <p>
+    {{ form.source.label }}<br>
+    {{ form.source }}
+    {% for error in form.source.errors %}
+    <span style="color: red;">{{ error }} </span>
+    {% endfor %}
+    </p>
+  <p>
+    {{ form.date_acquired.label }}<br>
+    <i>Year-Month-Date format</i><br>
+    {{ form.date_acquired }}
+    {% for error in form.date_acquired.errors %}
+    <span style="color: red;">{{ error }} </span>
+    {% endfor %}
+    </p>
+  <p>
+      {{ form.tasting_notes.label }}<br>
+      {{ form.tasting_notes }}
+      {% for error in form.tasting_notes.errors %}
+      <span style="color: red;">{{ error }} </span>
+      {% endfor %}
+    </p>
+  <p>
+    {{ form.origin_country.label }}<br>
+    {{ form.origin_country }}
+    {% for error in form.origin_country.errors %}
+    <span style="color: red;">{{ error }} </span>
+    {% endfor %}
+    </p>
+  <p>
+    {{ form.farm_information.label }}<br>
+    {{ form.farm_information }}
+    {% for error in form.farm_information.errors %}
+    <span style="color: red;">{{ error }} </span>
+    {% endfor %}
+    </p>
+  <p>
+    {{ form.submit() }}
+    {% for error in form.submit.errors %}
+    <span style="color: red;">{{ error }} </span>
+    {% endfor %}
+    </p>
+  </form>
+
+{% endblock %}

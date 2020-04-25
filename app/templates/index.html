@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+  <p>
+    <h1> Welcome to your Coffee Log</h1>
+  </p>
+  <p> You can enter a new event, view previous tastings and roasts, or view a list of your green
+    and roasted coffees by selecting an option above.
+  </p>
+</div>
+<a href="{{ url_for('new_event') }}">new events here!</a>
+
+
+{% endblock %}
