@@ -14,12 +14,13 @@ class GreenCoffee(db.Model):
 
 class RoastedCoffee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    roaster = db.Column(db.String(128), index=True, unique=False)
-    roast_date = db.Column(db.DateTime, index=True, unique=False)
-    coffee_name = db.Column(db.String(60), index=True, unique=False)
-    origin_country = db.Column(db.String(60), index=True, unique=False)
-    farm_information = db.Column(db.String(256), index=False, unique=False)
-    official_notes = db.Column(db.String(256), index=False, unique=False)
+    roaster = db.Column(db.String(128), index=True)
+    roast_date = db.Column(db.DateTime, index=True)
+    coffee_name = db.Column(db.String(60))
+    origin_country = db.Column(db.String(60))
+    farm_information = db.Column(db.String(256))
+    official_notes = db.Column(db.String(256))
+    roast_session = db.relationship('RoastSession', backref='roast_info', lazy='dynamic')
 
     def __repr__(self):
         return '<{} from {}>'.format(self.coffee_name, self.roaster)
@@ -32,6 +33,7 @@ class TastingSession(db.Model):
     liquid_in = db.Column(db.Integer, index=False, unique=False)
     beverage_out = db.Column(db.Integer, index=False, unique=False)
     tasting_notes = db.Column(db.String(200), index=False, unique=False)
+    coffee = db.relationship('RoastedCoffee', backref='coffee', lazy='dynamic')
 
 class RoastSession(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -41,3 +43,4 @@ class RoastSession(db.Model):
     roast_time = db.Column(db.Integer, index=False, unique=False)
     fc_time = db.Column(db.Integer, index=False, unique=False)
     temp_data = db.Column(db.String(256), index=False, unique=False)
+    green_coffee = db.relationship('GreenCoffee', backref='greens', lazy='dynamic')
