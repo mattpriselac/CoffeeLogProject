@@ -20,7 +20,7 @@ class NewRoastedCoffee(FlaskForm):
 class NewGreenCoffee(FlaskForm):
     source = StringField('Source', validators=[DataRequired()])
     date_acquired = DateField('Date Acquired', validators=[DataRequired()])
-    tasting_notes = StringField("Supplier's Tasting Notes")
+    official_notes = StringField("Supplier's Tasting Notes")
     origin_country = StringField('Country of Origin', validators=[DataRequired()])
     farm_information = TextAreaField('Regional or Farm information')
     submit = SubmitField('Submit your new Green Coffee')

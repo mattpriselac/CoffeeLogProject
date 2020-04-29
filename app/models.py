@@ -9,6 +9,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_has = db.Column(db.String(128))
+    greens_added = db.relationship("GreenCoffee", backref="added_by", lazy="dynamic")
 
     def set_password(self, password):
         self.password_has = generate_password_hash(password)
@@ -24,3 +25,15 @@ class User(UserMixin, db.Model):
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
+
+class GreenCoffee(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    source = db.Column(db.String)
+    date_acquired = db.Column(db.String(10))
+    origin_country = db.Column(db.String(30))
+    farm_information = db.Column(db.String(140))
+    official_notes = db.Column(db.String(140))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __repr__(self):
+        return '<GreenCoffee {}, {}, {}>'.format(self.source, self.date_acquired, self.origin_country)

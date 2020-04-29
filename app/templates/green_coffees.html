@@ -1,6 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
-
-<p>put a list of all green coffees here!</p>      
-
+<div class='jumbotron jumbotron-fluid text-center'>
+  <h3 class='font-weight-light'>Green Coffees</h3>
+</div>
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Source</th>
+        <th scope="col">Origin Country</th>
+        <th scope="col">Farm Information</th>
+        <th scope="col">Date Acquired</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for coffee in gcs %}
+       <tr>
+         <td>{{ coffee.source  }}</td>
+         <td>{{ coffee.origin_country }}</td>
+         <td>{{ coffee.farm_information }}</td>
+         <td>{{ coffee.date_acquired}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

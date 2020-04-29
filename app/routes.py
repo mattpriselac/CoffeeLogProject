@@ -1,8 +1,9 @@
-from app import app
+from app import app, db
 from flask import render_template, url_for, redirect, flash
-from app.forms import LoginForm
+from app.forms import LoginForm, NewGreenCoffee
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User
+from app.models import User, GreenCoffee
+from sqlalchemy import desc
 
 @app.route('/')
 @app.route('/index')
@@ -23,15 +24,21 @@ def new_tasting():
 @app.route('/green_coffees')
 @login_required
 def green_coffees():
-    return render_template('green_coffees.html')
+    gcs = GreenCoffee.query.order_by(desc('id')).all()
+
+    return render_template('green_coffees.html', gcs=gcs)
 
 @app.route('/new_green_coffee', methods=['GET','POST'])
 @login_required
 def new_green_coffee():
     form = NewGreenCoffee()
     if form.validate_on_submit():
-        flash('You succesfully added your new coffee from {}'.format(form.source.data))
+        gc = GreenCoffee(source=form.source.data, date_acquired=form.date_acquired.data, origin_country=form.origin_country.data, farm_information=form.farm_information.data, official_notes=form.official_notes.data, user_id=current_user.id)
+        db.session.add(gc)
+        db.session.commit()
+        flash("Your new coffee has been added!")
         return redirect(url_for('green_coffees'))
+
     return render_template('new_green_coffee.html', title="New Green Coffee", form=form)
 
 @app.route('/new_roast')
