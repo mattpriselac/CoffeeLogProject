@@ -1,6 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
-
-<p>a list of roasts will appear here</p>
-
+<div class='jumbotron jumbotron-fluid text-center'>
+  <h3 class='font-weight-light'>Roasted Coffees</h3>
+</div>
+<div class="container">
+  <div class='alert alert-success text-center'>
+    Click the id number of a roast to get the full profile
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th class='align-middle text-center' scope="col">Roast ID number</th>
+        <th class='align-middle text-center' scope="col">Green Coffee Source</th>
+        <th class='align-middle text-center' scope="col">Green Coffee Origin</th>
+        <th class='align-middle text-center' scope="col">Roast Date</th>
+        <th class='align-middle text-center' scope="col">Green Coffee Batch</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in rs %}
+       <tr>
+         <td class='align-middle text-center'><a class='link' href="{{ url_for('roast_profile', id=r.id) }}">{{ r.id }}</a></td>
+         <td class='align-middle text-center'>{{ r.green_coffee.source  }}</td>
+         <td class='align-middle text-center'>{{ r.green_coffee.origin_country }}</td>
+         <td class='align-middle text-center'>{{ r.roast_date }}</td>
+         <td class='align-middle text-center'>{{ r.green_coffee.roasts.index(r)+1 }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

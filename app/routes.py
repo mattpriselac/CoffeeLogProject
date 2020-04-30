@@ -1,8 +1,8 @@
 from app import app, db
 from flask import render_template, url_for, redirect, flash
-from app.forms import LoginForm, NewGreenCoffee
+from app.forms import LoginForm, NewGreenCoffee, NewRoastSession
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, GreenCoffee
+from app.models import User, GreenCoffee, RoastSession
 from sqlalchemy import desc
 
 @app.route('/')
@@ -41,10 +41,38 @@ def new_green_coffee():
 
     return render_template('new_green_coffee.html', title="New Green Coffee", form=form)
 
-@app.route('/new_roast')
+@app.route('/new_roast', methods=['GET','POST'])
 @login_required
 def new_roast():
-    return render_template('new_roast.html')
+    form = NewRoastSession()
+    gc_list = GreenCoffee.query.order_by(desc('id')).all()
+    gc_name_id_pairs = []
+    for coffee in gc_list:
+        source_origin = coffee.source + ", " + coffee.origin_country
+        gc_name_id_pairs.append((coffee.id, source_origin))
+    form.green_coffee.choices = gc_name_id_pairs
+
+    if form.validate_on_submit():
+        rs = RoastSession(green_coffee_id=form.green_coffee.data, green_weight=form.green_grams.data, roasted_weight=form.roasted_grams.data, fc_time=form.fc_time.data, roast_time=form.roast_time.data, roast_date=form.roast_date.data, temp_data=form.temp_data.data)
+        db.session.add(rs)
+        db.session.commit()
+        flash("Your new roast session has been added!")
+        return redirect(url_for('roasts'))
+
+    return render_template('new_roast.html', title="New Roast Session", form=form)
+
+@app.route('/roast/<id>')
+@login_required
+def roast_profile(id):
+    r = RoastSession.query.filter_by(id=int(id)).first_or_404()
+    roast_no = r.green_coffee.roasts.index(r) + 1
+    w_l = str(100*round(((r.green_weight-r.roasted_weight)/r.green_weight), 3))+"%"
+    clean_roast_time = str(r.roast_time//60)+":"+str(r.roast_time%60)
+    dev_time = str(100*round((r.roast_time-r.fc_time)/r.roast_time, 3))+"%"
+    clean_fc_time = str(r.fc_time//60)+":"+str(r.fc_time%60)
+    return render_template('roast.html', r=r, w_l=w_l, clean_roast_time=clean_roast_time, dev_time=dev_time, clean_fc_time=clean_fc_time, roast_no=roast_no)
+
+
 
 @app.route('/new_roasted_coffee', methods=['GET','POST'])
 @login_required
@@ -64,7 +92,9 @@ def roasted_coffees():
 @app.route('/roasts')
 @login_required
 def roasts():
-    return render_template('roasts.html')
+    rs = RoastSession.query.order_by(desc('id')).all()
+
+    return render_template('roasts.html', rs=rs)
 
 @app.route('/tastings')
 @login_required

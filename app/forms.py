@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, DateField, IntegerField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, DateField, IntegerField, SubmitField, TextAreaField, SelectField
 from wtforms.validators import DataRequired
 
 class LoginForm(FlaskForm):
@@ -36,5 +36,12 @@ class NewTastingSession(FlaskForm):
     tasting_notes = StringField('Tasting Notes', validators=[DataRequired()])
     submit = SubmitField('Submit your new Tasting Session')
 
-#class NewRoastSession(FlaskForm):
-#i need a selection method here to require a green coffee in.
+class NewRoastSession(FlaskForm):
+    green_coffee = SelectField('Green Coffee id', coerce=int, validators=[DataRequired()])
+    green_grams = IntegerField('Grams of Green Coffee', validators=[DataRequired()])
+    roasted_grams = IntegerField('Grams of Roasted Coffee', validators=[DataRequired()])
+    roast_date = StringField('Roast Date', validators=[DataRequired()])
+    roast_time = IntegerField('Roast time (in seconds)', validators=[DataRequired()])
+    fc_time = IntegerField('First Crack time (in seconds)', validators=[DataRequired()])
+    temp_data = StringField('Temperature Data')
+    submit = SubmitField('Record your Roast Session')

@@ -1,6 +1,68 @@
 {% extends "base.html" %}
 {% block content %}
-
+<div class='jumbotron jumbotron-fluid text-center'>
+  <h3 class='font-weight-light'>Record your roast session</h3>
+</div>
+<div class='container'>
+  <form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+      {{ form.green_coffee.label }}<br>
+      {{ form.green_coffee }}
+      {% for error in form.green_coffee.errors %}
+      <span style="color: red;">{{ error }} </span>
+      {% endfor %}
+      </p>
+    <p>
+      {{ form.roast_date.label }}<br>
+      {{ form.roast_date }}
+      {% for error in form.roast_date.errors %}
+      <span style="color: red;">{{ error }} </span>
+      {% endfor %}
+      </p>
+    <p>
+        {{ form.green_grams.label }}<br>
+        {{ form.green_grams }}
+        {% for error in form.green_grams.errors %}
+        <span style="color: red;">{{ error }} </span>
+        {% endfor %}
+      </p>
+    <p>
+      {{ form.roasted_grams.label }}<br>
+      {{ form.roasted_grams }}
+      {% for error in form.roasted_grams.errors %}
+      <span style="color: red;">{{ error }} </span>
+      {% endfor %}
+      </p>
+    <p>
+      {{ form.roast_time.label }}<br>
+      {{ form.roast_time }}
+      {% for error in form.roast_time.errors %}
+      <span style="color: red;">{{ error }} </span>
+      {% endfor %}
+      </p>
+    <p>
+      {{ form.fc_time.label }}<br>
+      {{ form.fc_time }}
+      {% for error in form.fc_time.errors %}
+      <span style="color: red;">{{ error }} </span>
+      {% endfor %}
+      </p>
+    <p>
+      {{ form.temp_data.label }}<br>
+      {{ form.temp_data }}
+      {% for error in form.temp_data.errors %}
+      <span style="color: red;">{{ error }} </span>
+      {% endfor %}
+      </p>
+    <p>
+      {{ form.submit() }}
+      {% for error in form.submit.errors %}
+      <span style="color: red;">{{ error }} </span>
+      {% endfor %}
+      </p>
+    </form>
+</div>
 
 
 {% endblock %}

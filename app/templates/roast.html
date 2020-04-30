@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container my-3">
+  <div class='card'>
+    <h3 class='card-header'>{{ r.green_coffee.source }}</h3>
+    <div class='card-body bg-secondary'>
+      <h2 class='card-title'> {{ r.green_coffee.origin_country }}</h2>
+      <h4 class ='card-subtitle'> {{ r.green_coffee.farm_information }}</h4>
+    </div>
+    <div class='card-body bg-secondary'>
+      <ul class='list-group list-group-flush'>
+        <li class='list-group-item bg-light'>Roast batch of this coffee: {{ roast_no }} </li>
+        <li class='list-group-item bg-light'>Roast Date: {{ r.roast_date }}</li>
+        <li class='list-group-item bg-light'>Green Coffee in: {{ r.green_weight }}</li>
+        <li class='list-group-item bg-light'>Roasted Coffee out: {{ r.roasted_weight }}</li>
+        <li class='list-group-item bg-light'>Weight loss: {{ w_l }} </li>
+        <li class='list-group-item bg-light'>Roast Time: {{ clean_roast_time }}</li>
+        <li class='list-group-item bg-light'>First Crack Time: {{ clean_fc_time }}</li>
+        <li class='list-group-item bg-light'>Development Time: {{ dev_time }} </li>
+      </ul>
+    </div>
+    <div class='card-footer text-muted'>
+      Overall Roast ID is {{ r.id }}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
