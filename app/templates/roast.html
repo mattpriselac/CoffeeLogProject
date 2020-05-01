@@ -4,8 +4,8 @@
 <div class="container my-3">
   <div class='card'>
     <h3 class='card-header'>{{ r.green_coffee.source }}</h3>
-    <div class='card-body bg-secondary'>
-      <h2 class='card-title'> {{ r.green_coffee.origin_country }}</h2>
+    <div class='card-body bg-danger'>
+      <h2 class='card-title'><a href="{{ url_for('green_profile', id=r.green_coffee.id) }}">{{ r.green_coffee.origin_country }}</a></h2>
       <h4 class ='card-subtitle'> {{ r.green_coffee.farm_information }}</h4>
     </div>
     <div class='card-body bg-secondary'>

@@ -41,6 +41,13 @@ def new_green_coffee():
 
     return render_template('new_green_coffee.html', title="New Green Coffee", form=form)
 
+@app.route('/green/<id>')
+@login_required
+def green_profile(id):
+    g = GreenCoffee.query.filter_by(id=int(id)).first_or_404()
+    return render_template('green.html', g=g)
+
+
 @app.route('/new_roast', methods=['GET','POST'])
 @login_required
 def new_roast():
@@ -66,9 +73,9 @@ def new_roast():
 def roast_profile(id):
     r = RoastSession.query.filter_by(id=int(id)).first_or_404()
     roast_no = r.green_coffee.roasts.index(r) + 1
-    w_l = str(100*round(((r.green_weight-r.roasted_weight)/r.green_weight), 3))+"%"
+    w_l = str(100*round((r.green_weight-r.roasted_weight)/r.green_weight, 2))+"%"
     clean_roast_time = str(r.roast_time//60)+":"+str(r.roast_time%60)
-    dev_time = str(100*round((r.roast_time-r.fc_time)/r.roast_time, 3))+"%"
+    dev_time = str(100*round((r.roast_time-r.fc_time)/r.roast_time, 2))+"%"
     clean_fc_time = str(r.fc_time//60)+":"+str(r.fc_time%60)
     return render_template('roast.html', r=r, w_l=w_l, clean_roast_time=clean_roast_time, dev_time=dev_time, clean_fc_time=clean_fc_time, roast_no=roast_no)
 

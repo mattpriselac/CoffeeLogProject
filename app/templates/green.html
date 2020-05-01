@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container my-3">
+  <div class='card'>
+    <h3 class='card-header'>{{ g.source }}</h3>
+    <div class='card-body bg-secondary'>
+      <h2 class='card-title'> {{ g.origin_country }}</h2>
+      <h4 class ='card-subtitle'> {{ g.farm_information }}</h4>
+    </div>
+    <div class='card-body bg-secondary'>
+      <ul class='list-group list-group-flush'>
+        <li class='list-group-item bg-light'>Date Acquired: {{ g.date_acquired }} </li>
+        <li class='list-group-item bg-light'>Green Supplier Tasting Notes: {{ g.official_notes }}</li>
+        <li class='list-group-item bg-light'>Roasts:
+        {% for r in g.roasts %}
+        <li class='list-group-item bg-light text-black'><a href="{{ url_for('roast_profile', id=r.id) }}">Roast {{ g.roasts.index(r)+1 }}, {{ r.roast_date }} </a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class='card-footer text-muted'>
+      Green Cofee ID is {{ g.id }}
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
