@@ -51,3 +51,17 @@ class RoastSession(db.Model):
 
     def __repr__(self):
         return '<RoastSession {} roast number {}>'.format(self.green_coffee, self.id)
+
+class RoastedCoffee(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    roaster = db.Column(db.String(40))
+    roast_date = db.Column(db.String(14))
+    tasting_notes = db.Column(db.String(120))
+    origin_country = db.Column(db.String(30))
+    farm_information = db.Column(db.String(120))
+    coffee_name = db.Column(db.String(80))
+    roast_session_id = db.Column(db.Integer, db.ForeignKey("roast_session.id"))
+    roast_session = db.relationship("RoastSession", backref="coffees")
+
+    def __repr__(self):
+        return '<Roasted Coffee {} by {}>'.format(self.coffee_name, self.roaster)

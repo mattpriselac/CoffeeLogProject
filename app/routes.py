@@ -1,8 +1,8 @@
 from app import app, db
 from flask import render_template, url_for, redirect, flash
-from app.forms import LoginForm, NewGreenCoffee, NewRoastSession
+from app.forms import LoginForm, NewGreenCoffee, NewRoastSession, NewRoastedCoffee
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, GreenCoffee, RoastSession
+from app.models import User, GreenCoffee, RoastSession, RoastedCoffee
 from sqlalchemy import desc
 
 @app.route('/')
@@ -85,16 +85,42 @@ def roast_profile(id):
 @login_required
 def new_roasted_coffee():
     form = NewRoastedCoffee()
+    rs_list = RoastSession.query.order_by(desc('id')).all()
+    rs_session_coffee_pairs = []
+    for session in rs_list:
+        supplier = session.green_coffee.source
+        country = session.green_coffee.origin_country
+        roast_date = session.roast_date
+        batch_num = str(session.green_coffee.roasts.index(session)+1)
+        batch = f'batch {batch_num}'
+        label_list = [supplier, country, roast_date, batch]
+        label = ', '.join(label_list)
+        rs_session_coffee_pairs.append((session.id, label))
+    form.roast_session.choices = rs_session_coffee_pairs
+
     if form.validate_on_submit():
+        rc = RoastedCoffee(roaster=form.roaster.data, roast_date=form.roast_date.data, tasting_notes=form.tasting_notes.data, origin_country=form.origin_country.data, farm_information=form.farm_information.data, coffee_name=form.coffee_name.data)
+
+        db.session.add(rc)
+        db.session.commit()
         flash('You sucessfully added your new coffee from {}'.format(form.roaster.data))
         return redirect(url_for('roasted_coffees'))
+
     return render_template('new_roasted_coffee.html', title="New Roasted Coffee", form=form)
 
 
 @app.route('/roasted_coffees')
 @login_required
 def roasted_coffees():
-    return render_template('roasted_coffees.html')
+    rc = RoastedCoffee.query.order_by(desc('roast_date')).all()
+    return render_template('roasted_coffees.html', rc=rc)
+
+@app.route('/roasted_coffee/<id>')
+@login_required
+def rc_profile(id):
+    r = RoastedCoffee.query.filter_by(id=int(id)).first_or_404()
+    return render_template('roasted_coffee.html', r=r)
+
 
 @app.route('/roasts')
 @login_required

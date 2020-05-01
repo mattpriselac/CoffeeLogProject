@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, DateField, IntegerField, SubmitField, TextAreaField, SelectField
+from wtforms import StringField, PasswordField, BooleanField, DateField, IntegerField, SubmitField, TextAreaField, SelectField, SelectMultipleField
 from wtforms.validators import DataRequired
 
 class LoginForm(FlaskForm):
@@ -10,11 +10,12 @@ class LoginForm(FlaskForm):
 
 class NewRoastedCoffee(FlaskForm):
     roaster = StringField('Roaster', validators=[DataRequired()])
-    roast_date = DateField('Roast Date', validators=[DataRequired()])
+    roast_date = StringField('Roast Date', validators=[DataRequired()])
     coffee_name = StringField('Name of Coffee')
     origin_country = StringField('Origin')
-    official_notes = StringField("Roaster's Tasting Notes")
+    tasting_notes = StringField("Roaster's Tasting Notes")
     farm_information = TextAreaField('Regional or Farm information')
+    roast_session = SelectMultipleField('Which Roast Sessions went into this coffee?', coerce=int)
     submit = SubmitField('Submit your new Roasted Coffee')
 
 class NewGreenCoffee(FlaskForm):

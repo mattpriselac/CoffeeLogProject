@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container my-3">
+  <div class='card'>
+    <h3 class='card-header'>{{ r.roaster }}</h3>
+    <div class='card-body bg-secondary'>
+      <h2 class='card-title'> {{ r.coffee_name }}</h2>
+      <h4 class ='card-subtitle'> {{ r.origin_country }}</h4>
+    </div>
+    <div class='card-body bg-secondary'>
+      <ul class='list-group list-group-flush'>
+        <li class='list-group-item bg-light'>Date Roasted: {{ r.roast_date }} </li>
+        <li class='list-group-item bg-light'>Roaster's Tasting Notes: {{ r.official_notes }}</li>
+        <li class='list-group-item bg-light'>Farm Information: {{ r.farm_information }}</li>
+        <li class='list-group-item bg-light'>Roast Session ID (if I roasted it): {{ r.roast_session.id }}</li>
+      </ul>
+    </div>
+    <div class='card-footer text-muted'>
+      Roasted Cofee ID is {{ r.id }}
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
