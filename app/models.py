@@ -10,7 +10,6 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     greens_added = db.relationship("GreenCoffee", backref="added_by", lazy="dynamic")
-    roast_session_ad
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
